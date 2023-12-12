@@ -33,6 +33,8 @@ app.use("/", express.static(path.join(__dirname, "public")))
 //check all routes after / in this file
 app.use("/", require("./routes/root"))
 
+app.use("/users", require("./routes/userRoutes"))
+
 // error handling
 app.all("*", (req, res)=>{
     res.status(404)
