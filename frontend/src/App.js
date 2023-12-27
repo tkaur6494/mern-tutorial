@@ -6,6 +6,7 @@ import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
 import NotesList from "./features/notes/NotesList"
 import UsersList from "./features/users/UsersList"
+import EditUser from "./features/users/EditUser";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           </Route>
           <Route path="users">
             <Route index element={<UsersList/>}/>
+            <Route path=":id" element={<EditUser/>}/>
           </Route>
         </Route>
         {/*End /dash */}
