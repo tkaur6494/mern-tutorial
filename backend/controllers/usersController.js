@@ -77,7 +77,7 @@ const updateUser = asyncHandler(async (req, resp) => {
   user.active = active
 
   if(password){
-    user.password = await brcypt.hash(password, 10)
+    user.password = await bcrypt.hash(password, 10)
   }
   const updatedUser = await user.save()
 
