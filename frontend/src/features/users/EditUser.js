@@ -3,7 +3,8 @@ import { assignedRoles } from "../../config/assignedRoles";
 import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { updateUser } from "./usersApi";
+import { updateUser, deleteUser } from "./usersApi";
+import ErrorBoxWrapper from "../../components/ErrorBox/ErrorBoxWrapper";
 
 const EditUser = () => {
   const location = useLocation();
@@ -13,7 +14,7 @@ const EditUser = () => {
   const [roles, setRoles] = useState(location.state.userDetail.roles);
   const [isError, setIsError] = useState({ isError: false, text: "" });
 
-  const saveForm = () => {
+  const onSaveForm = () => {
     let requestBody = {
       id: location.state.userDetail._id,
       username,
@@ -57,16 +58,22 @@ const EditUser = () => {
         } else {
           setIsError({ isError: false, text: response.message });
         }
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
       });
   };
 
-  const resetForm = () => {
-    setUsername(location.state.userDetail.username);
-    setPassword("");
-    setActive(location.state.userDetail.active);
-    setRoles(location.state.userDetail.roles);
+  const onDeleteUser = () => {
+    deleteUser({ id: location.state.userDetail._id })
+      .then((response) => {
+        if (response.status !== 200) {
+          setIsError({ isError: true, text: response.message });
+        } else {
+          setIsError({ isError: false, text: response.message });
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <>
@@ -76,12 +83,12 @@ const EditUser = () => {
           <FontAwesomeIcon
             icon={faSave}
             className="icon__pointer icon__padding"
-            onClick={saveForm}
+            onClick={onSaveForm}
           ></FontAwesomeIcon>
           <FontAwesomeIcon
             icon={faTrash}
             className="icon__pointer icon__padding"
-            onClick={resetForm}
+            onClick={onDeleteUser}
           ></FontAwesomeIcon>
         </div>
       </div>
@@ -143,9 +150,10 @@ const EditUser = () => {
       </form>
 
       {isError.text !== "" && (
-        <div className={isError.isError ? "form__error" : "form__success"}>
-          {isError.text}
-        </div>
+        <ErrorBoxWrapper
+          text={isError.text}
+          color={isError.isError ? "red" : "green"}
+        />
       )}
     </>
   );
