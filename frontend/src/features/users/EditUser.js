@@ -153,6 +153,7 @@ const EditUser = () => {
         <ErrorBoxWrapper
           text={isError.text}
           color={isError.isError ? "red" : "green"}
+          onClose={() => setIsError({ isError: false, text: "" })}
         />
       )}
     </>
