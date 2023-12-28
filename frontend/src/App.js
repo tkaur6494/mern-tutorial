@@ -9,6 +9,8 @@ import UsersList from "./features/users/UsersList"
 import EditUser from "./features/users/EditUser";
 import NewUser from "./features/users/NewUser";
 import NewNote from "./features/notes/NewNote";
+import EditNote from "./features/notes/EditNote";
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
           <Route path="notes">
             <Route index element={<NotesList/>}/>
             <Route path="new" element={<NewNote/>}/>
+            <Route path=":id" element={<EditNote/>}/>
           </Route>
           <Route path="users">
             <Route index element={<UsersList/>}/>

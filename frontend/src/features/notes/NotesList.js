@@ -21,6 +21,10 @@ const NotesList = () => {
         navigate("/dash/notes/new")
     }
     
+    const editNoteClick = (note) => {
+        navigate(`/dash/notes/${note._id}`,{state:{"noteDetail":note}})
+    }
+
     return (
         <>
          <h1>Notes List</h1>
@@ -46,7 +50,7 @@ const NotesList = () => {
                                     <td>{formatDate(note.updatedAt)}</td>
                                     <td>{note.title}</td>
                                     <td>{note.username}</td>
-                                    <td><FontAwesomeIcon icon={faEdit}/></td>
+                                    <td><FontAwesomeIcon icon={faEdit} onClick={()=>editNoteClick(note)}/></td>
                                 </tr>
                             )
                         })

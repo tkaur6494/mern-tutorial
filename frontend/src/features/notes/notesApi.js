@@ -22,3 +22,17 @@ export const createNote = async (newNote) => {
       };
     });
 };
+
+export const updateNote = async (updatedNote) => {
+  return api
+    .patch("notes", updatedNote)
+    .then((response) => {
+      return { status: response.status, message: response.data.message};
+    })
+    .catch((err) => {
+      return {
+        status: err.response.status,
+        message: err.response.data.message,
+      };
+    });
+};

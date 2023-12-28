@@ -87,6 +87,7 @@ const NewNote = () => {
         <textarea
           id="text"
           name="text"
+          className="form__textarea"
           value={text}
           onChange={(e) => {
             setText(e.target.value);

@@ -222,6 +222,10 @@ td {
   border-radius: 10px;
 }
 
+.editnote__time{
+  padding-top:10px
+}
+
 
 /* thead,
 tbody,
@@ -318,7 +322,7 @@ tr {
 } */
 
 .form__input,
-.form__submit-button {
+.form__submit-button,.form__textarea {
   padding: 0.5em;
   border-radius: 15px;
 }
