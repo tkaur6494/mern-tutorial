@@ -157,7 +157,7 @@ a:focus-visible {
 .dash-container {
   padding: 0.75em 0.5em 0.5em;
   flex-grow: 1;
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
@@ -216,8 +216,10 @@ td {
   padding-right: 10px;
 }
 
-.create__button{
+.create__button {
   align-self: end;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 
@@ -350,7 +352,8 @@ tr {
   right: 0.5em;
 } */
 
-.edituser__title, .newuser__title {
+.edituser__title,
+.newuser__title {
   display: flex;
   justify-content: space-between;
 }
@@ -359,19 +362,19 @@ tr {
   color: var(--ERROR);
   font-size: 1em;
   text-align: center;
-  padding-top:1em;
+  padding-top: 1em;
 }
 
-.form__success{
+.form__success {
   color: var(--STATUS-COMPLETE);
   font-size: 1em;
   text-align: center;
-  padding-top:1em;
+  padding-top: 1em;
 }
 
 
-.error_box{
-  position:absolute;
+.error_box {
+  position: absolute;
   z-index: 100000000;
   min-height: 50px;
   padding: 10px;
@@ -383,24 +386,24 @@ tr {
   font-size: 0.75em;
 }
 
-.error_box_top_left{
-  top:5px;
-  left:5px
+.error_box_top_left {
+  top: 5px;
+  left: 5px
 }
 
-.error_box_top_right{
-  top:5px;
-  right:5px;
+.error_box_top_right {
+  top: 5px;
+  right: 5px;
 }
 
-.error_box_bottom_left{
-  bottom:50px;
-  left:5px
+.error_box_bottom_left {
+  bottom: 50px;
+  left: 5px
 }
 
-.error_box_bottom_right{
-  bottom:50px;
-  right:5px
+.error_box_bottom_right {
+  bottom: 50px;
+  right: 5px
 }
 
 @media screen and (max-width: 400px) {
