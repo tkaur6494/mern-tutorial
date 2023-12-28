@@ -17,6 +17,10 @@ const UsersList = () => {
     navigate(`/dash/users/${userDetail._id}`,{state:{"userDetail":userDetail}})
   }
 
+  const newUserClick = () => {
+    navigate(`/dash/users/new`)
+  }
+
   return (
     <>
       <h1>Users List</h1>
@@ -42,7 +46,7 @@ const UsersList = () => {
         </tbody>
       </table>
       </div>
-      
+      <button onClick={newUserClick}>Create new user</button>
     </>
   );
 };
