@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 const ErrorBox = ({
   position = "top-right",
   text = "Error",

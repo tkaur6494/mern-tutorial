@@ -343,7 +343,7 @@ tr {
   right: 0.5em;
 } */
 
-.edituser__title {
+.edituser__title, .newuser__title {
   display: flex;
   justify-content: space-between;
 }
