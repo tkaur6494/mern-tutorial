@@ -46,7 +46,7 @@ const UsersList = () => {
         </tbody>
       </table>
       </div>
-      <button onClick={newUserClick}>Create new user</button>
+      <button className="create__button" onClick={newUserClick}>Create new user</button>
     </>
   );
 };
