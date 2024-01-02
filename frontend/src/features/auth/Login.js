@@ -32,7 +32,6 @@ const Login = () => {
     }
     authLogin(requestBody)
       .then((response) => {
-        console.log(response)
         if (response.status !== 200 && response.status !== 201) {
             setIsError({isError:true, text:response.message})
         } else {
