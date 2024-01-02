@@ -1,7 +1,7 @@
-import {withoutApi} from "../../api/api";
+import {withAuth} from "../../api/api";
 
 export const authLogin = async (userDetail) => {
-  return withoutApi
+  return withAuth
     .post("auth", userDetail)
     .then((response) => {
       return { status: response.status, token: response.data.accessToken };

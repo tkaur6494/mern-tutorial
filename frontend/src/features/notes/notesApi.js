@@ -1,16 +1,17 @@
-import api from "../../api";
+import {withAuth} from "../../api/api";
 
 export const getNotesList = async () => {
-  return api
+  return withAuth
     .get("notes")
     .then((response) => {
-        return response?.data
+      console.log(response)  
+      return response?.data
     })
     .catch((err) => console.log(err));
 };
 
 export const createNote = async (newNote) => {
-  return api
+  return withAuth
     .post("notes", newNote)
     .then((response) => {
       return { status: response.status, message: response.data.message };
@@ -24,7 +25,7 @@ export const createNote = async (newNote) => {
 };
 
 export const updateNote = async (updatedNote) => {
-  return api
+  return withAuth
     .patch("notes", updatedNote)
     .then((response) => {
       return { status: response.status, message: response.data.message};

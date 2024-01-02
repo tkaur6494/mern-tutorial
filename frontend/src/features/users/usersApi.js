@@ -1,7 +1,7 @@
-import api from "../../api";
+import {withAuth} from "../../api/api";
 
 export const getUserList = async () => {
-  return api
+  return withAuth
     .get("users")
     .then((response) => {
       return response?.data;
@@ -10,7 +10,7 @@ export const getUserList = async () => {
 };
 
 export const updateUser = async (updatedUser) => {
-  return api
+  return withAuth
     .patch("users", updatedUser)
     .then((response) => {
       return { status: response.status, message: response.data.message };
@@ -24,7 +24,7 @@ export const updateUser = async (updatedUser) => {
 };
 
 export const deleteUser = async (userId) => {
-  return api
+  return withAuth
     .delete("users", { data: userId })
     .then((response) => {
       return { status: response.status, message: response.data };
@@ -38,7 +38,7 @@ export const deleteUser = async (userId) => {
 };
 
 export const createUser = async (newUser) => {
-  return api
+  return withAuth
     .post("users", newUser)
     .then((response) => {
       return { status: response.status, message: response.data.message };
