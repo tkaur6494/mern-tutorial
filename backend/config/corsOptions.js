@@ -1,7 +1,8 @@
-const { ca } = require("date-fns/locale")
 const allowedOrigins = require("./allowedOrigins")
 
+// const corsOptions={credentials: true, origin: 'http://localhost:3000'}
 const corsOptions = {
+    
     origin: (origin, callback) => {
         if(allowedOrigins.indexOf(origin) !== 1 || !origin){ //!origin no origin to allow access from postman and such
             callback(null, true)
@@ -10,8 +11,9 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'))
         }
     },
-    credentails: true,
-    optionsSuccessStatus: 200
+    credentials: true,
+    optionsSuccessStatus: 200,
+    
 }
 
 module.exports = corsOptions
