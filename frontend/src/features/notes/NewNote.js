@@ -5,7 +5,9 @@ import ErrorBoxWrapper from "../../components/ErrorBox/ErrorBoxWrapper";
 import { getUserList } from "../users/usersApi";
 import { createNote } from "./notesApi";
 
+
 const NewNote = () => {
+
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [assignedTo, setAssignedTo] = useState({});
@@ -14,7 +16,10 @@ const NewNote = () => {
 
   useEffect(() => {
     getUserList()
-      .then((users) => setUserList(users))
+      .then((users) => {
+        setUserList(users)
+        setAssignedTo(users[0])
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -50,7 +55,7 @@ const NewNote = () => {
       .then((response) => {
         if (response.status !== 200 && response.status !== 201) {
           setIsError({ isError: true, text: response.message });
-        } else {
+        }  else {
           setIsError({ isError: false, text: response.message });
         }
       })
