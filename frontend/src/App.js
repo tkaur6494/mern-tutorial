@@ -10,7 +10,7 @@ import EditUser from "./features/users/EditUser";
 import NewUser from "./features/users/NewUser";
 import NewNote from "./features/notes/NewNote";
 import EditNote from "./features/notes/EditNote";
-
+import Logout from "./features/auth/Logout"
 
 function App() {
   return (
@@ -31,7 +31,9 @@ function App() {
             <Route path=":id" element={<EditUser/>}/>
             <Route path="new" element={<NewUser/>}/>
           </Route>
+          
         </Route>
+        <Route path="logout"  element={<Logout/>}/>
         {/*End /dash */}
       </Route>
     </Routes>
