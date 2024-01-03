@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Public from "./components/Public";
@@ -11,13 +12,17 @@ import NewUser from "./features/users/NewUser";
 import NewNote from "./features/notes/NewNote";
 import EditNote from "./features/notes/EditNote";
 import Logout from "./features/auth/Logout"
+import {RoleContext} from "./components/RoleContext";
 
 function App() {
+  const [userData, setUserData] = useState({})
   return (
+    <RoleContext.Provider value={userData}>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
-        <Route path="login" element={<Login />} />
+        <Route path="login" element={<Login setContext={userInfo => setUserData(userInfo)}/>} />
+        
         {/*Begin /dash layout ToDO: Protect these routes */}
         <Route path="dash" element={<DashLayout />}>
           <Route index element={<Welcome />} />
@@ -33,10 +38,12 @@ function App() {
           </Route>
           
         </Route>
+        
         <Route path="logout"  element={<Logout/>}/>
         {/*End /dash */}
       </Route>
     </Routes>
+    </RoleContext.Provider>
   );
 }
 

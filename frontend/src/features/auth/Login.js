@@ -3,8 +3,10 @@ import { useState } from "react";
 import { authLogin } from "./authApi";
 import ErrorBoxWrapper from "../../components/ErrorBox/ErrorBoxWrapper";
 import {setAuthorization} from "../../api/api"
+import { jwtDecode } from "jwt-decode";
 
-const Login = () => {
+
+const Login = ({setContext}) => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +38,7 @@ const Login = () => {
             setIsError({isError:true, text:response.message})
         } else {
           setAuthorization(response.token)
+          setContext(jwtDecode(response.token).UserInfo)
           navigate("/dash")
         }
       })
