@@ -1,4 +1,4 @@
-import {withAuth} from "../../api/api";
+import { withAuth } from "../../api/api";
 
 export const getUserList = async () => {
   return withAuth
@@ -6,7 +6,12 @@ export const getUserList = async () => {
     .then((response) => {
       return response?.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return {
+        status: err.response.status,
+        message: err.response.data.message,
+      };
+    });
 };
 
 export const updateUser = async (updatedUser) => {
