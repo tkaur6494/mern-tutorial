@@ -21,19 +21,19 @@ withAuth.interceptors.response.use((resp)=>{
             originalRequest._retry = true;
             
             const resp = await withAuth.get("/auth/refresh")
-            try{
-                originalRequest.headers["Authorization"] = `Bearer ${resp.data.accessToken}`
+            if(resp.data.hasOwnProperty("accessToken")){
+                originalRequest.headers["Authorization"] = `Bearer ${resp.data?.accessToken}`
                 withAuth = setAuthorization(resp.data.accessToken)
                 return withAuth(originalRequest)
             }
-            catch {
-                console.log("Error")
+            else {
+                window.location.href="/logout"
+                return {status:9999, data:{message:"Logged out"}}
+                // console.log("Error")
             }            
         }
    }
-   else{
-    return err
-   }
+   return err.response
 })
 
 

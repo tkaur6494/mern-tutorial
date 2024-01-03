@@ -4,10 +4,14 @@ export const getNotesList = async () => {
   return withAuth
     .get("notes")
     .then((response) => {
-      console.log(response)  
       return response?.data
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return {
+      status: err.response.status,
+      message: err.response.data.message,
+    }
+  });
 };
 
 export const createNote = async (newNote) => {
