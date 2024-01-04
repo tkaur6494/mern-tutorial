@@ -1,12 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getUserList } from "../users/usersApi";
 import ErrorBoxWrapper from "../../components/ErrorBox/ErrorBoxWrapper";
 import { updateNote } from "./notesApi";
+import {RoleContext} from "../../components/RoleContext";
 
 const EditNote = () => {
+  const {roles} = useContext(RoleContext)
   const location = useLocation();
   const [title, setTitle] = useState(location.state.noteDetail.title);
   const [text, setText] = useState(location.state.noteDetail.text);
@@ -35,6 +37,16 @@ const EditNote = () => {
     })[0];
     setAssignedTo(selectedUser);
   };
+
+  const enableDeleteNote = (roles) => {
+    if(roles.includes("Manager")){
+      return true
+    }
+    if(roles.includes("Admin")){
+      return true
+    }
+    return false
+  }
 
   const onSaveForm = () => {
     let requestBody = {
@@ -104,11 +116,11 @@ const EditNote = () => {
             className="icon__pointer icon__padding"
             onClick={onSaveForm}
           ></FontAwesomeIcon>
-          <FontAwesomeIcon
+          {enableDeleteNote(roles) && <FontAwesomeIcon
             icon={faTrash}
             className="icon__pointer icon__padding"
             onClick={onDeleteUser}
-          ></FontAwesomeIcon>
+          ></FontAwesomeIcon>}
         </div>
       </div>
 
