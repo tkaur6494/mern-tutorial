@@ -27,6 +27,7 @@ withAuth.interceptors.response.use(
           return withAuth(originalRequest);
         } else {
           window.location.href = "/logout";
+          sessionStorage.removeItem("userInfo");
           return { status: 9999, data: { message: "Logged out" } };
           // console.log("Error")
         }
