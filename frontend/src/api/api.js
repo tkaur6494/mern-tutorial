@@ -15,14 +15,13 @@ withAuth.interceptors.response.use(
     return resp;
   },
   async (err) => {
-    console.log(err);
     if (err.response.status === 403) {
       const originalRequest = err.config;
       if (err.response.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         const resp = await withAuth.get("/auth/refresh");
-        console.log(resp);
+
         if (resp.data.hasOwnProperty("UserInfo")) {
           //save username and role in session
           return withAuth(originalRequest);
