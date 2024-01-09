@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Public from "./components/Public";
 import Login from "./features/auth/Login";
@@ -22,11 +22,30 @@ function App() {
     setUserData(userInfo);
   };
 
+  const setStatus = (roles) => {
+    let status = "Employee";
+    if (roles.includes("Manager")) {
+      status = "Manager";
+    }
+    if (roles.includes("Admin")) {
+      status = "Admin";
+    }
+    return status;
+  };
+
   useEffect(() => {
     if (sessionStorage.getItem("userInfo")) {
       setUserData(JSON.parse(sessionStorage.getItem("userInfo")));
     }
   }, []);
+
+  const ProtectedRoute = ({ children }) => {
+    let status = setStatus(userData.roles);
+    if (status == "Employee") {
+      return <Navigate to={"/dash"} replace />;
+    }
+    return children;
+  };
 
   return (
     <RoleContext.Provider value={userData}>
@@ -47,9 +66,30 @@ function App() {
               <Route path=":id" element={<EditNote />} />
             </Route>
             <Route path="users">
-              <Route index element={<UsersList />} />
-              <Route path=":id" element={<EditUser />} />
-              <Route path="new" element={<NewUser />} />
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <UsersList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <ProtectedRoute>
+                    <EditUser />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="new"
+                element={
+                  <ProtectedRoute>
+                    <NewUser />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Route>
 
