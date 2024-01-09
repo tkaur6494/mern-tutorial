@@ -4,7 +4,7 @@ export const authLogin = async (userDetail) => {
   return withAuth
     .post("auth", userDetail)
     .then((response) => {
-      return { status: response.status, token: response.data.accessToken };
+      return { status: response.status, userInfo: response.data.UserInfo };
     })
     .catch((err) => {
       return {

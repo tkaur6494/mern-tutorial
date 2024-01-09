@@ -29,26 +29,38 @@ const loginAuth = asyncHandler(async (req, resp) => {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" }
+    { expiresIn: "1m" }
   );
+
   const refreshToken = jwt.sign(
     {
       username: user.username,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "10m" }
+    { expiresIn: "7d" }
   );
+  resp.cookie("access", accessToken, {
+    httpOnly: true, //accessible only by web server
+    secure: true, //https
+    sameSite: "None", //cross-site cookie
+    maxAge: 1 * 60 * 1000, //cookie expiry: set to match rT
+  });
 
   // Create secure cookie with refresh token
   resp.cookie("jwt", refreshToken, {
     httpOnly: true, //accessible only by web server
-    // secure: true, //https
+    secure: true, //https
     sameSite: "None", //cross-site cookie
     maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
   });
 
   // Send accessToken containing username and roles
-  resp.json({ accessToken });
+  resp.json({
+    UserInfo: {
+      username: user.username,
+      roles: user.roles,
+    },
+  });
 });
 
 // @desc Refresh token
@@ -78,10 +90,22 @@ const refreshAuth = asyncHandler(async (req, resp) => {
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "15s" }
+        { expiresIn: "1m" }
       );
+
+      resp.cookie("access", accessToken, {
+        httpOnly: true, //accessible only by web server
+        secure: true, //https
+        sameSite: "None", //cross-site cookie
+        maxAge: 1 * 60 * 1000, //cookie expiry: set to match rT
+      });
       // Send accessToken containing username and roles
-      resp.json({ accessToken });
+      resp.json({
+        UserInfo: {
+          username: user.username,
+          roles: user.roles,
+        },
+      });
     }
   );
 });
@@ -90,10 +114,10 @@ const refreshAuth = asyncHandler(async (req, resp) => {
 // @route POST /logout
 // @access Public
 const logoutAuth = asyncHandler(async (req, resp) => {
-    const cookies = req.cookies
-    if (!cookies?.jwt) return resp.sendStatus(204) //No content
-    resp.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
-    resp.json({ message: 'Cookie cleared' })
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return resp.sendStatus(204); //No content
+  resp.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  resp.json({ message: "Cookie cleared" });
 });
 
 module.exports = {

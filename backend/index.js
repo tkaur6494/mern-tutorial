@@ -2,8 +2,8 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const https = require('https')
-const fs = require("fs")
+const https = require("https");
+const fs = require("fs");
 const { logger, logEvents } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
 const cookieParser = require("cookie-parser");
@@ -17,9 +17,9 @@ const app = express();
 const PORT = process.env.PORT || 3500;
 
 var certOptions = {
-  key: fs.readFileSync(path.resolve('cert/server.key')),
-  cert: fs.readFileSync(path.resolve('cert/server.crt'))
-}
+  key: fs.readFileSync(path.resolve("cert/localhost-key.pem")),
+  cert: fs.readFileSync(path.resolve("cert/localhost.pem")),
+};
 
 connectDB();
 
@@ -40,13 +40,10 @@ app.use("/", express.static(path.join(__dirname, "public")));
 //check all routes after / in this file
 app.use("/", require("./routes/root"));
 
-app.use("/auth",require("./routes/authRoutes"));
+app.use("/auth", require("./routes/authRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 
-app.use(
-  "/notes",
-  require("./routes/noteRoutes")
-);
+app.use("/notes", require("./routes/noteRoutes"));
 
 // error handling
 app.all("*", (req, res) => {

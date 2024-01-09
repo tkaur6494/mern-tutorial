@@ -1,19 +1,16 @@
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { authLogin } from "./authApi";
 import ErrorBoxWrapper from "../../components/ErrorBox/ErrorBoxWrapper";
-import {setAuthorization} from "../../api/api"
-import { jwtDecode } from "jwt-decode";
 
-
-const Login = ({setContext}) => {
-  const navigate = useNavigate()
+const Login = ({ setContext }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState({ isError: false, text: "" });
 
   const onSaveForm = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let requestBody = {
       username,
       password,
@@ -35,11 +32,10 @@ const Login = ({setContext}) => {
     authLogin(requestBody)
       .then((response) => {
         if (response.status !== 200 && response.status !== 201) {
-            setIsError({isError:true, text:response.message})
+          setIsError({ isError: true, text: response.message });
         } else {
-          setAuthorization(response.token)
-          setContext(jwtDecode(response.token).UserInfo)
-          navigate("/dash")
+          setContext(response.userInfo);
+          navigate("/dash");
         }
       })
       .catch((err) => {
@@ -79,12 +75,12 @@ const Login = ({setContext}) => {
           <button onClick={onSaveForm}>Sign In</button>
         </form>
         {isError.text !== "" && (
-        <ErrorBoxWrapper
-          text={isError.text}
-          color={isError.isError ? "red" : "green"}
-          onClose={() => setIsError({ isError: false, text: "" })}
-        />
-      )}
+          <ErrorBoxWrapper
+            text={isError.text}
+            color={isError.isError ? "red" : "green"}
+            onClose={() => setIsError({ isError: false, text: "" })}
+          />
+        )}
       </div>
     </>
   );
